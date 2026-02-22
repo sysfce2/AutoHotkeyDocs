@@ -718,7 +718,7 @@ SB_SetText("There are " . RowCount . " rows selected.")</pre>
 <p>Divides the bar into multiple sections according to the specified widths.</p>
 <pre class="Syntax"><span class="func">SB_SetParts</span>(<span class="optional">Width1, Width2, ... Width255</span>)</pre>
 <p><em>WidthN:</em> If all parameters are omitted, the bar is restored to having only a single, long part. Otherwise, specify the width of each part except the last (the last will fill the remaining width of the bar). For example, <code>SB_SetParts(50, 50)</code> would create three parts: the first two of width 50, and the last one of all the remaining width. The numbers are in pixels.</p>
-<p>Upon success, this function returns a non-zero value (the status bar's <a href="ControlGet.htm#Hwnd">HWND</a>). Upon failure, it returns 0.</p>
+<p>Upon success, this function returns the status bar's <a href="../misc/ControlID.htm#HWND">window handle (HWND)</a>. Upon failure, it returns 0.</p>
 <p>Any parts "deleted" by this function will start off with no text the next time they are shown. Furthermore, their icons are automatically destroyed.</p>
 
 <h4 id="SB_SetIcon">SB_SetIcon</h4>

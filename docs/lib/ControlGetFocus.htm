@@ -20,7 +20,7 @@
 <dl>
 
   <dt>OutputVar</dt>
-  <dd><p>The name of the output variable in which to store the ClassNN of the control (classname followed by its sequence number within its parent window), e.g. Button12.</p></dd>
+  <dd><p>The name of the output variable in which to store the control's <a href="../misc/ControlID.htm#ClassNN">ClassNN</a>.</p></dd>
 
   <dt>WinTitle, WinText, ExcludeTitle, ExcludeText</dt>
   <dd>
@@ -44,7 +44,7 @@
 <p><a href="ControlFocus.htm">ControlFocus</a>, <a href="GuiControlGet.htm#Focus">GuiControlGet Focus</a>, <a href="GuiControlGet.htm#FocusV">GuiControlGet FocusV</a>, <a href="ControlMove.htm">ControlMove</a>, <a href="ControlClick.htm">ControlClick</a>, <a href="ControlGetText.htm">ControlGetText</a>, <a href="ControlSetText.htm">ControlSetText</a>, <a href="ControlSend.htm">ControlSend</a></p>
 <h2 id="Examples">Examples</h2>
 <div class="ex" id="ExBasic">
-<p><a class="ex_number" href="#ExBasic"></a> Reports the ClassNN of the control which has the keyboard focus in Notepad.</p>
+<p><a class="ex_number" href="#ExBasic"></a> Reports the <a href="../misc/ControlID.htm#ClassNN">ClassNN</a> of the control which has the keyboard focus in Notepad.</p>
 <pre>WinActivate, ahk_class Notepad
 ControlGetFocus, OutputVar, ahk_class Notepad
 if ErrorLevel

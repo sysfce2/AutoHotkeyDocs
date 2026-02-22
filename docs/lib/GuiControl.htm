@@ -23,11 +23,9 @@
   <dd>These are dependent upon each other and their usage is described <a href="#SubCommands">below</a>.</dd>
 
   <dt>ControlID</dt>
-  <dd><p>If the target control has an associated variable, specify the variable's name as the <em>ControlID</em> (this method takes precedence over the ones described next). For this reason, it is usually best to assign a variable to any control that will later be accessed via GuiControl or <a href="GuiControlGet.htm">GuiControlGet</a>, even if that control is not input-capable (such as <a href="GuiControls.htm#GroupBox">GroupBox</a> or <a href="GuiControls.htm#Text">Text</a>).</p>
-  <p>Otherwise, specify for <em>ControlID</em> either ClassNN (the classname and instance number of the control) or the control's text, both of which can be determined via Window Spy. When using text, the matching behavior is determined by <a href="SetTitleMatchMode.htm">SetTitleMatchMode</a>.</p>
-    <p class="note"><strong>Note:</strong> A <a href="GuiControls.htm#Picture">Picture</a> control's file name (as it was specified at the time the control was created) may be used as its <em>ControlID</em>.</p>
-  <p><span class="ver">[v1.1.04+]</span>: <em>ControlID</em> can be the <a href="Gui.htm#HwndOutputVar">HWND</a> of a control.</p>
-  <p>If the control is not on the default GUI, <strong>the name or HWND of the GUI must also be specified</strong> -- except on <span class="ver">[v1.1.20+]</span> when <em>ControlID</em> is a HWND, since each HWND is unique. See <a href="#Remarks">Remarks</a> for details.</p>
+  <dd>
+    <p>The control's associated variable name (if any), ClassNN, text, or in <span class="ver">[v1.1.04+]</span> the control's HWND. For details, see <a href="../misc/ControlID.htm">Control Identifiers</a>.</p>
+    <p>If the control is not on the default GUI, <strong>the name or HWND of the GUI must also be specified</strong> -- except on <span class="ver">[v1.1.20+]</span> when <em>ControlID</em> is a HWND, since each HWND is unique. See <a href="#Remarks">Remarks</a> for details.</p>
   </dd>
 </dl>
 
@@ -173,7 +171,7 @@ GuiControl +g, <i>ControlID</i>, % FuncObj</pre>
 <p>To operate upon a window other than the <a href="Gui.htm#DefaultWin">default</a>, include its <a href="Gui.htm#MultiWin">name or number</a> (or in <span class="ver">[v1.1.03+]</span> its <a href="Gui.htm#GuiHwndOutputVar">HWND</a>) followed by a colon in front of the sub-command as in these examples:</p>
 <pre>GuiControl, MyGui:Show, MyButton
 GuiControl, MyGui:, MyListBox, Item1|Item2</pre>
-<p>This is required even if <em>ControlID</em> is a control's <a href="Gui.htm#Events">associated variable</a>, since any one variable can be used on multiple GUI windows. In <span class="ver">[v1.1.20+]</span>, the GUI name can be omitted if <em>ControlID</em> is a control's HWND.</p>
+<p>This is required even if <em>ControlID</em> is a control's <a href="../misc/ControlID.htm#Associated_Variable">associated variable</a>, since any one variable can be used on multiple GUI windows. In <span class="ver">[v1.1.20+]</span>, the GUI name can be omitted if <em>ControlID</em> is a control's HWND.</p>
 <p>A GUI <a href="../misc/Threads.htm">thread</a> is defined as any thread launched as a result of a GUI action. GUI actions include selecting an item from a GUI window's <a href="Gui.htm#Menu">menu bar</a>, or triggering one of its <a href="Gui.htm#label">g-labels</a> (such as by pressing a button).</p>
 <p>The <a href="Gui.htm#DefaultWin">default window name</a> for a GUI thread is that of the window that launched the thread. Non-GUI threads use 1 as their default.</p>
 <p id="Delete">There is no Delete sub-command to delete a control. As a workaround, use the sub-commands <a href="#Hide">Hide</a> and/or <a href="#Disable">Disable</a>, or destroy and recreate the entire window via <a href="Gui.htm#Destroy">Gui Destroy</a>.</p>
@@ -184,7 +182,7 @@ GuiControl, MyGui:, MyListBox, Item1|Item2</pre>
 <h2 id="Examples">Examples</h2>
 
 <div class="ex" id="ExReplaceList">
-<p><a class="ex_number" href="#ExReplaceList"></a> Replaces a <a href="GuiControls.htm#ListBox">ListBox</a> control's current list with a new one using its <a href="Gui.htm#Events">associated variable</a>.</p>
+<p><a class="ex_number" href="#ExReplaceList"></a> Replaces a <a href="GuiControls.htm#ListBox">ListBox</a> control's current list with a new one using its <a href="../misc/ControlID.htm#Associated_Variable">associated variable</a>.</p>
 <pre>Gui, Add, ListBox, vMyListBox, Black|White
 Gui, Show
 Sleep 1000 <em>; Wait for demonstration purposes.</em>
@@ -192,7 +190,7 @@ GuiControl,, MyListBox, |Red|Green|Blue</pre>
 </div>
 
 <div class="ex" id="ExNewText">
-<p><a class="ex_number" href="#ExNewText"></a> Puts new text into an <a href="GuiControls.htm#Edit">Edit</a> control using its ClassNN.</p>
+<p><a class="ex_number" href="#ExNewText"></a> Puts new text into an <a href="GuiControls.htm#Edit">Edit</a> control using its <a href="../misc/ControlID.htm#ClassNN">ClassNN</a>.</p>
 <pre>Gui, Add, Edit, r2 w100, Old text line.
 Gui, Show
 Sleep 1000 <em>; Wait for demonstration purposes.</em>
@@ -200,7 +198,7 @@ GuiControl,, Edit1, New text line 1.`nNew text line 2.</pre>
 </div>
 
 <div class="ex" id="ExRadio">
-<p><a class="ex_number" href="#ExRadio"></a> Checks (turns on) a <a href="GuiControls.htm#Radio">Radio</a> control and unchecks all the others in its group using its <a href="Gui.htm#Events">associated variable</a>.</p>
+<p><a class="ex_number" href="#ExRadio"></a> Checks (turns on) a <a href="GuiControls.htm#Radio">Radio</a> control and unchecks all the others in its group using its <a href="../misc/ControlID.htm#Associated_Variable">associated variable</a>.</p>
 <pre>Gui, Add, Radio, vMyRadio1 Checked, Radio button 1
 Gui, Add, Radio, vMyRadio2, Radio button 2
 Gui, Add, Radio, vMyRadio3, Radio button 3
@@ -211,12 +209,12 @@ GuiControl,, MyRadio2, 1</pre>
 
 <div class="ex" id="ExMove">
 <p><a class="ex_number" href="#ExMove"></a> Examples for the <a href="#Move">Move</a> sub-command.</p>
-<p>Moves a <a href="GuiControls.htm#Button">Button</a> control to a new position using its text.</p>
+<p>Moves a <a href="GuiControls.htm#Button">Button</a> control to a new position using its <a href="../misc/ControlID.htm#Text">text</a>.</p>
 <pre>Gui, Add, Button,, OK
 Gui, Show, w300 h300
 Sleep 1000 <em>; Wait for demonstration purposes.</em>
 GuiControl, Move, OK, x100 y200</pre>
-<p>Moves and resizes an <a href="GuiControls.htm#Edit">Edit</a> control relative to its current position and size using its <a href="Gui.htm#Events">associated variable</a>.</p>
+<p>Moves and resizes an <a href="GuiControls.htm#Edit">Edit</a> control relative to its current position and size using its <a href="../misc/ControlID.htm#Associated_Variable">associated variable</a>.</p>
 <pre>Gui, Add, Edit, vMyEdit
 Gui, Show, w300 h300
 Sleep 1000 <em>; Wait for demonstration purposes.</em>
@@ -225,7 +223,7 @@ GuiControl, Move, MyEdit, % "x" VarX+10 "y" VarY+5 "w" VarW*2 "h" VarH*1.5</pre>
 </div>
 
 <div class="ex" id="ExFocus">
-<p><a class="ex_number" href="#ExFocus"></a> Sets keyboard focus to an <a href="GuiControls.htm#Edit">Edit</a> control using its <a href="Gui.htm#Events">associated variable</a>.</p>
+<p><a class="ex_number" href="#ExFocus"></a> Sets keyboard focus to an <a href="GuiControls.htm#Edit">Edit</a> control using its <a href="../misc/ControlID.htm#Associated_Variable">associated variable</a>.</p>
 <pre>Gui, Add, Text, Section, First name:
 Gui, Add, Text,, Last name:
 Gui, Add, Edit, ys vFirstName
@@ -236,7 +234,7 @@ GuiControl, Focus, LastName</pre>
 </div>
 
 <div class="ex" id="ExFont">
-<p><a class="ex_number" href="#ExFont"></a> Changes the font and text color of a <a href="GuiControls.htm#Text">Text</a> control using its <a href="Gui.htm#Events">associated variable</a>.</p>
+<p><a class="ex_number" href="#ExFont"></a> Changes the font and text color of a <a href="GuiControls.htm#Text">Text</a> control using its <a href="../misc/ControlID.htm#Associated_Variable">associated variable</a>.</p>
 <pre>Gui, Font, s14
 Gui, Add, Text,, This is a test.
 Gui, Add, Text, vMyText, This is a test.

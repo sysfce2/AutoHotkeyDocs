@@ -360,7 +360,7 @@ Var := "The color is " FoundColor    <em>; Auto-concat</em></pre>
   </tr>
   <tr id="ScriptHwnd">
     <td>A_ScriptHwnd<br><span class="ver">[v1.1.01+]</span></td>
-    <td>The unique ID (HWND/handle) of the script's hidden <a href="Program.htm#main-window">main window</a>.</td>
+    <td>The <a href="misc/WinTitle.htm#ahk_id">unique ID (HWND/handle)</a> of the script's hidden <a href="Program.htm#main-window">main window</a>.</td>
   </tr>
   <tr id="LineNumber">
     <td>A_LineNumber</td>
@@ -672,11 +672,11 @@ MsgBox,  %ElapsedTime% milliseconds have elapsed.</pre>
   </tr>
   <tr id="DefaultListView">
     <td>A_DefaultListView <span class="ver">[v1.1.23+]</span></td>
-    <td>The <a href="lib/Gui.htm#Events">variable name</a> or <a href="lib/Gui.htm#HwndOutputVar">HWND</a> of the <a href="lib/ListView.htm">ListView control</a> upon which the <a href="lib/ListView.htm#BuiltIn">ListView functions</a> operate. If the default GUI lacks a ListView, this variable is blank.</td>
+    <td>The <a href="misc/ControlID.htm#Associated_Variable">associated variable name</a> or <a href="misc/ControlID.htm#HWND">HWND</a> of the <a href="lib/ListView.htm">ListView control</a> upon which the <a href="lib/ListView.htm#BuiltIn">ListView functions</a> operate. If the default GUI lacks a ListView, this variable is blank.</td>
   </tr>
   <tr id="DefaultTreeView">
     <td>A_DefaultTreeView <span class="ver">[v1.1.23+]</span></td>
-    <td>The <a href="lib/Gui.htm#Events">variable name</a> or <a href="lib/Gui.htm#HwndOutputVar">HWND</a> of the <a href="lib/TreeView.htm">TreeView control</a> upon which the <a href="lib/TreeView.htm#BuiltIn">TreeView functions</a> operate. If the default GUI lacks a TreeView, this variable is blank.</td>
+    <td>The <a href="misc/ControlID.htm#Associated_Variable">associated variable name</a> or <a href="misc/ControlID.htm#HWND">HWND</a> of the <a href="lib/TreeView.htm">TreeView control</a> upon which the <a href="lib/TreeView.htm#BuiltIn">TreeView functions</a> operate. If the default GUI lacks a TreeView, this variable is blank.</td>
   </tr>
   <tr id="Gui">
     <td>A_Gui</td>
@@ -684,7 +684,7 @@ MsgBox,  %ElapsedTime% milliseconds have elapsed.</pre>
   </tr>
   <tr id="GuiControl">
     <td>A_GuiControl</td>
-    <td>The name of the variable associated with the GUI control that launched  the <a href="misc/Threads.htm">current thread</a>. If that control lacks an <a href="lib/Gui.htm#Events">associated variable</a>, A_GuiControl instead contains the first 63 characters of the control's text/caption (this is most often used to avoid giving each button a variable name). A_GuiControl  is blank whenever: 1) A_Gui is blank; 2) a GUI menu bar item or event such as GuiClose/GuiEscape launched the current thread; 3) the control lacks an associated variable and has no caption; or 4) The control that originally launched the current thread no longer exists (perhaps due to <a href="lib/Gui.htm#Destroy">Gui Destroy</a>).</td>
+    <td>The name of the variable associated with the GUI control that launched  the <a href="misc/Threads.htm">current thread</a>. If that control lacks an <a href="misc/ControlID.htm#Associated_Variable">associated variable</a>, A_GuiControl instead contains the first 63 characters of the control's text/caption (this is most often used to avoid giving each button a variable name). A_GuiControl  is blank whenever: 1) A_Gui is blank; 2) a GUI menu bar item or event such as GuiClose/GuiEscape launched the current thread; 3) the control lacks an associated variable and has no caption; or 4) The control that originally launched the current thread no longer exists (perhaps due to <a href="lib/Gui.htm#Destroy">Gui Destroy</a>).</td>
   </tr>
   <tr id="GuiWidth">
     <td>A_GuiWidth<br>

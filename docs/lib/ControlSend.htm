@@ -16,15 +16,17 @@
 <p>Sends simulated keystrokes to a window or control.</p>
 
 <pre class="Syntax">
-<span class="func">ControlSend</span>, Control, Keys <span class="optional">, WinTitle, WinText, ExcludeTitle, ExcludeText</span>
-<span class="func">ControlSendRaw</span>, Control, Keys <span class="optional">, WinTitle, WinText, ExcludeTitle, ExcludeText</span>
+<span class="func">ControlSend</span>, ControlID, Keys <span class="optional">, WinTitle, WinText, ExcludeTitle, ExcludeText</span>
+<span class="func">ControlSendRaw</span>, ControlID, Keys <span class="optional">, WinTitle, WinText, ExcludeTitle, ExcludeText</span>
 </pre>
 <h2 id="Parameters">Parameters</h2>
 <dl>
 
-  <dt>Control</dt>
-  <dd><p>If blank or omitted, the target window's topmost control will be used. Otherwise, specify either ClassNN (the classname and instance number of the control) or the control's text, both of which can be determined via Window Spy. When using text, the matching behavior is determined by <a href="SetTitleMatchMode.htm">SetTitleMatchMode</a>. If this parameter is <code class="no-highlight">ahk_parent</code>, the keystrokes will be sent directly to the target window instead of one of its controls (see <a href="../misc/Winamp.htm">Automating Winamp</a> for an example).</p>
-    <p>To operate upon a control's HWND (window handle), leave the <em>Control</em> parameter blank and specify <code class="no-highlight">ahk_id %ControlHwnd%</code> for the <em>WinTitle</em> parameter (this also works on hidden controls even when <a href="DetectHiddenWindows.htm">DetectHiddenWindows</a> is Off). The HWND of a control is typically retrieved via <a href="ControlGet.htm#Hwnd">ControlGet Hwnd</a>, <a href="MouseGetPos.htm">MouseGetPos</a>, or <a href="DllCall.htm">DllCall()</a>.</p></dd>
+  <dt>ControlID</dt>
+  <dd>
+    <p>If blank or omitted, the keystrokes will be sent to the target window's topmost control (or the window itself if there are no controls). Otherwise, specify the control's ClassNN or text, or leave it blank and specify <code class="no-highlight">ahk_id %ControlHwnd%</code> for the <em>WinTitle</em> parameter to operate upon the control's HWND. For details, see <a href="../misc/ControlID.htm">Control Identifiers</a>.</p>
+    <p>If this parameter is <code class="no-highlight">ahk_parent</code>, the keystrokes will be sent directly to the target window instead of one of its controls (see <a href="../misc/Winamp.htm">Automating Winamp</a> for an example).</p>
+  </dd>
 
   <dt>Keys</dt>
   <dd><p>The sequence of keys to send (see the <a href="Send.htm">Send</a> command for details). To send a literal comma, <a href="../misc/EscapeChar.htm">escape</a> it (<code class="no-highlight">`,</code>). The rate at which characters are sent is determined by <a href="SetKeyDelay.htm">SetKeyDelay</a>.</p>
@@ -46,7 +48,7 @@
 <p>This command is intended for use with controls in a non-GUI window, i.e. a window that is not created with the <a href="Gui.htm">Gui</a> command. It works best with common or predefined Microsoft controls; some applications use custom or modified controls, in which case the command might not work as expected. For <a href="GuiControls.htm">GUI controls</a>, it is usually more convenient to use <a href="GuiControl.htm">GuiControl</a>, assuming a suitable counterpart exists.</p>
 <p>Unlike <a href="Send.htm">Send</a>, ControlSend ignores <a href="SendMode.htm">SendMode</a>. It uses the operating system's PostMessage function to post keyboard messages.</p>
 <p>ControlSendRaw is similar to ControlSend, except that it sends the keystrokes in the <em>Keys</em> parameter without translating <code class="no-highlight">{Enter}</code> to <kbd>Enter</kbd>, <code class="no-highlight">^c</code> to <kbd>Ctrl</kbd>+<kbd>C</kbd>, etc. For details, see <a href="Send.htm#SendRaw">Raw mode</a>. It is also valid to use <a href="Send.htm#Raw">{Raw}</a> or <a href="Send.htm#Text">{Text}</a> with ControlSend. <span class="ver">[v1.1.27+]</span>: <a href="Send.htm#SendText">Text mode</a> may be more reliable for sending text.</p>
-<p>If the <em>Control</em> parameter is omitted, this command will attempt to send directly to the target window by sending to its topmost control (which is often the correct one) or the window itself if there are no controls. This is useful if a window does not appear to have any controls at all, or just for the convenience of not having to worry about which control to send to.</p>
+<p>If the <em>ControlID</em> parameter is omitted, this command will attempt to send directly to the target window by sending to its topmost control (which is often the correct one) or the window itself if there are no controls. This is useful if a window does not appear to have any controls at all, or just for the convenience of not having to worry about which control to send to.</p>
 <p>By default, modifier keystrokes (Ctrl, Alt, Shift, and Win) are sent as they normally would be by the <a href="Send.htm#SendEvent">SendEvent</a> command. This allows command prompt and other console windows to properly detect uppercase letters, control characters, etc. It may also improve reliability in other ways.</p>
 <p>However, in some cases these modifier events may interfere with the active window, especially if the user is actively typing during a ControlSend or if <kbd>Alt</kbd> is being sent (since <kbd>Alt</kbd> activates the active window's menu bar). This can be avoided by explicitly sending modifier up and down events as in this example:</p>
 <pre>ControlSend, Edit1, {Alt down}f{Alt up}, Untitled - Notepad</pre>

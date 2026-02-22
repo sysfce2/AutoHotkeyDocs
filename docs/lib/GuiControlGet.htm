@@ -26,11 +26,8 @@
   <dd>These are dependent upon each other and their usage is described <a href="#SubCommands">below</a>.</dd>
 
   <dt>ControlID</dt>
-  <dd><p>If blank or omitted, it behaves as though the name of the output variable was specified. For example, <code>GuiControlGet, MyEdit</code> is the same as <code>GuiControlGet, MyEdit,, MyEdit</code>.</p>
-      <p>If the target control has an associated variable, specify the variable's name as the <em>ControlID</em> (this method takes precedence over the ones described next). For this reason, it is usually best to assign a variable to any control that will later be accessed via <a href="GuiControl.htm">GuiControl</a> or GuiControlGet, even if that control is not input-capable (such as <a href="GuiControls.htm#GroupBox">GroupBox</a> or <a href="GuiControls.htm#Text">Text</a>).</p>
-    <p>Otherwise, specify for <em>ControlID</em> either ClassNN (the classname and instance number of the control) or the control's text, both of which can be determined via Window Spy. When using text, the matching behavior is determined by <a href="SetTitleMatchMode.htm">SetTitleMatchMode</a>.</p>
-    <p class="note"><strong>Note:</strong> A <a href="GuiControls.htm#Picture">Picture</a> control's file name (as it was specified at the time the control was created) may be used as its <em>ControlID</em>.</p>
-    <p><span class="ver">[v1.1.04+]</span>: <em>ControlID</em> can be the <a href="Gui.htm#HwndOutputVar">HWND</a> of a control.</p>
+  <dd>
+    <p>If blank or omitted, it behaves as though the control's <a href="../misc/ControlID.htm#Associated_Variable">associated variable name</a> (if any) was specified (e.g. <code>GuiControlGet, MyEdit</code> is the same as <code>GuiControlGet, MyEdit,, MyEdit</code>). Otherwise, specify the control's associated variable name (if any), ClassNN, text, or in <span class="ver">[v1.1.04+]</span> the control's HWND. For details, see <a href="../misc/ControlID.htm">Control Identifiers</a>.</p>
     <p>If the control is not on the default GUI, <strong>the name or HWND of the GUI must also be specified</strong> -- except on <span class="ver">[v1.1.20+]</span> when <em>ControlID</em> is a HWND, since each HWND is unique. See <a href="#Remarks">Remarks</a> for details.</p>
   </dd>
 </dl>
@@ -74,13 +71,13 @@ MsgBox The X coordinate is %MyEditX%. The Y coordinate is %MyEditY%. The width i
 <p>See <a href="#ExPos">example #4</a> for a demonstration.</p>
 
 <h3 id="Focus">Focus</h3>
-<p>Retrieves the ClassNN (class name and sequence number) of the control with keyboard focus.</p>
+<p>Retrieves the <a href="../misc/ControlID.htm#ClassNN">ClassNN</a> of the control with keyboard focus.</p>
 <pre class="Syntax"><span class="func">GuiControlGet</span>, OutputVar, Focus</pre>
 <p>Since a GUI window must be <a href="WinActivate.htm">active</a> for one of its controls to have focus, <em>OutputVar</em> will be made blank if it is not active.</p>
 <p>See <a href="#ExFocus">example #5</a> for a demonstration.</p>
 
 <h3 id="FocusV">FocusV <span class="ver">[v1.0.43.06+]</span></h3>
-<p>Retrieves the <a href="Gui.htm#Events">associated variable name</a> of the control with keyboard focus.</p>
+<p>Retrieves the <a href="../misc/ControlID.htm#Associated_Variable">associated variable name</a> of the control with keyboard focus.</p>
 <pre class="Syntax"><span class="func">GuiControlGet</span>, OutputVar, FocusV</pre>
 <p>Since a GUI window must be <a href="WinActivate.htm">active</a> for one of its controls to have focus, <em>OutputVar</em> will be made blank if it is not active.</p>
 <p>If that control lacks an associated variable, the first 63 characters of the control's text/caption is retrieved instead (this is most often used to avoid giving each button a variable name).</p>
@@ -94,12 +91,12 @@ MsgBox The X coordinate is %MyEditX%. The Y coordinate is %MyEditY%. The width i
 <pre class="Syntax"><span class="func">GuiControlGet</span>, OutputVar, Visible <span class="optional">, ControlID</span></pre>
 
 <h3 id="Hwnd">Hwnd <span class="ver">[v1.0.46.16+]</span></h3>
-<p>Retrieves the window handle (HWND) of a control.</p>
+<p>Retrieves the <a href="../misc/ControlID.htm#HWND">window handle (HWND)</a> of a control.</p>
 <pre class="Syntax"><span class="func">GuiControlGet</span>, OutputVar, Hwnd <span class="optional">, ControlID</span></pre>
-<p>A control's HWND is often used with <a href="PostMessage.htm">PostMessage</a>, <a href="PostMessage.htm">SendMessage</a>, and <a href="DllCall.htm">DllCall()</a>. However, the option <a href="Gui.htm#HwndOutputVar">+Hwnd<em>OutputVar</em></a> is usually a more concise way to get the HWND.</p>
+<p>However, the option <a href="Gui.htm#HwndOutputVar">+Hwnd<em>OutputVar</em></a> is usually a more concise way to get the HWND.</p>
 
 <h3 id="Name">Name <span class="ver">[v1.1.03+]</span></h3>
-<p>Retrieves the <a href="Gui.htm#Events">associated variable name</a> of a control.</p>
+<p>Retrieves the <a href="../misc/ControlID.htm#Associated_Variable">associated variable name</a> of a control.</p>
 <pre class="Syntax"><span class="func">GuiControlGet</span>, OutputVar, Name <span class="optional">, ControlID</span></pre>
 <p>If that control lacks an associated variable, <em>OutputVar</em> is made blank.</p>
 
@@ -113,7 +110,7 @@ MsgBox The X coordinate is %MyEditX%. The Y coordinate is %MyEditY%. The width i
 <pre>GuiControlGet, MyEdit, MyGui:
 GuiControlGet, MyEdit, MyGui:Pos
 GuiControlGet, OutputVar, MyGui:Focus</pre>
-<p>This is required even if <em>ControlID</em> is a control's <a href="Gui.htm#Events">associated variable</a>, since any one variable can be used on multiple GUI windows. In <span class="ver">[v1.1.20+]</span>, the GUI name can be omitted if <em>ControlID</em> is a control's HWND.</p>
+<p>This is required even if <em>ControlID</em> is a control's <a href="../misc/ControlID.htm#Associated_Variable">associated variable</a>, since any one variable can be used on multiple GUI windows. In <span class="ver">[v1.1.20+]</span>, the GUI name can be omitted if <em>ControlID</em> is a control's HWND.</p>
 <p>A GUI <a href="../misc/Threads.htm">thread</a> is defined as any thread launched as a result of a GUI action. GUI actions include selecting an item from a GUI window's <a href="Gui.htm#Menu">menu bar</a>, or triggering one of its <a href="Gui.htm#label">g-labels</a> (such as by pressing a button).</p>
 <p>The <a href="Gui.htm#DefaultWin">default window name</a> for a GUI thread is that of the window that launched the thread. Non-GUI threads use 1 as their default.</p>
 
@@ -123,7 +120,7 @@ GuiControlGet, OutputVar, MyGui:Focus</pre>
 <h2 id="Examples">Examples</h2>
 
 <div class="ex" id="ExNoControlID">
-<p><a class="ex_number" href="#ExNoControlID"></a> Retrieves the text of an <a href="GuiControls.htm#Edit">Edit</a> control by using its <a href="Gui.htm#Events">associated variable</a> and stores it in that same variable.</p>
+<p><a class="ex_number" href="#ExNoControlID"></a> Retrieves the text of an <a href="GuiControls.htm#Edit">Edit</a> control by using its <a href="../misc/ControlID.htm#Associated_Variable">associated variable</a> and stores it in that same variable.</p>
 <pre>Gui, Add, Edit, vMyEdit, This is a test.
 Gui, Show
 GuiControlGet, MyEdit
@@ -153,7 +150,7 @@ return</pre>
 </div>
 
 <div class="ex" id="ExPos">
-<p><a class="ex_number" href="#ExPos"></a> Retrieves the position and size of a <a href="GuiControls.htm#Picture">Picture</a> control by using its ClassNN and stores the values in the PicX, PicY, PicW, and PicH variables.</p>
+<p><a class="ex_number" href="#ExPos"></a> Retrieves the position and size of a <a href="GuiControls.htm#Picture">Picture</a> control by using its <a href="../misc/ControlID.htm#ClassNN">ClassNN</a> and stores the values in the PicX, PicY, PicW, and PicH variables.</p>
 <pre>Gui, Add, Picture,, %A_AhkPath%
 Gui, Show
 GuiControlGet, Pic, Pos, Static1
@@ -161,7 +158,7 @@ MsgBox % "x" PicX ", y" PicY ", w" PicW ", h" PicH</pre>
 </div>
 
 <div class="ex" id="ExFocus">
-<p><a class="ex_number" href="#ExFocus"></a> Retrieves the ClassNN of the control with keyboard focus.</p>
+<p><a class="ex_number" href="#ExFocus"></a> Retrieves the <a href="../misc/ControlID.htm#ClassNN">ClassNN</a> of the control with keyboard focus.</p>
 <pre>Gui, Add, Edit
 Gui, Show
 GuiControlGet, focused_control, Focus

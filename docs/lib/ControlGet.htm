@@ -15,7 +15,7 @@
 <h1>ControlGet</h1>
 
 <p>Retrieves various types of information about a control.</p>
-<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, <a href="#SubCommands">SubCommand</a> <span class="optional">, Value, Control, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
+<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, <a href="#SubCommands">SubCommand</a> <span class="optional">, Value, ControlID, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
 
 <h2 id="Parameters">Parameters</h2>
 <dl>
@@ -25,10 +25,9 @@
   <dt>SubCommand, Value</dt>
   <dd>These are dependent upon each other and their usage is described <a href="#SubCommands">below</a>.</dd>
 
-  <dt>Control</dt>
+  <dt>ControlID</dt>
   <dd>
-    <p>If blank or omitted, the target window's topmost control will be used. Otherwise, specify either ClassNN (the classname and instance number of the control) or the control's text, both of which can be determined via Window Spy. When using text, the matching behavior is determined by <a href="SetTitleMatchMode.htm">SetTitleMatchMode</a>.</p>
-    <p>To operate upon a control's HWND (window handle), leave the <em>Control</em> parameter blank and specify <code class="no-highlight">ahk_id %ControlHwnd%</code> for the <em>WinTitle</em> parameter (this also works on hidden controls even when <a href="DetectHiddenWindows.htm">DetectHiddenWindows</a> is Off). The HWND of a control is typically retrieved via <a href="#Hwnd">ControlGet Hwnd</a>, <a href="MouseGetPos.htm">MouseGetPos</a>, or <a href="DllCall.htm">DllCall()</a>.</p>
+    <p>If blank or omitted, the target window's topmost control will be used. Otherwise, specify the control's ClassNN or text, or leave it blank and specify <code class="no-highlight">ahk_id %ControlHwnd%</code> for the <em>WinTitle</em> parameter to operate upon the control's HWND. For details, see <a href="../misc/ControlID.htm">Control Identifiers</a>.</p>
   </dd>
 
   <dt>WinTitle, WinText, ExcludeTitle, ExcludeText</dt>
@@ -61,7 +60,7 @@
 
 <h3 id="List">List</h3>
 <p>Retrieves a list of entries/rows from a list box, combo box, drop-down list, or list-view control.</p>
-<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, List <span class="optional">, Options, Control, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
+<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, List <span class="optional">, Options, ControlID, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
 <p>The output, error handling, and <em>Options</em> parameter usage depend on the target control. Specifically:</p>
 
 <h4 id="ListBox_ComboBox_DropDownList">List Box, Combo Box, and Drop-Down List</h4>
@@ -99,19 +98,19 @@ Loop, Parse, SelectedRows, `n  <em>; Rows are delimited by linefeeds (`n).</em>
 
 <h3 id="Checked">Checked</h3>
 <p>Retrieves 1 if a check box or radio button is checked, or 0 if unchecked.</p>
-<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, Checked <span class="optional">,, Control, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
+<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, Checked <span class="optional">,, ControlID, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
 
 <h3 id="Enabled">Enabled</h3>
 <p>Retrieves 1 if a control is enabled, or 0 if disabled.</p>
-<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, Enabled <span class="optional">,, Control, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
+<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, Enabled <span class="optional">,, ControlID, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
 
 <h3 id="Visible">Visible</h3>
 <p>Retrieves 1 if a control is visible, or 0 if hidden.</p>
-<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, Visible <span class="optional">,, Control, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
+<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, Visible <span class="optional">,, ControlID, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
 
 <h3 id="Tab">Tab</h3>
 <p>Retrieves the index of the active page in a tab control.</p>
-<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, Tab <span class="optional">,, Control, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
+<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, Tab <span class="optional">,, ControlID, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
 <p><em>OutputVar</em> is set to 1 for the first page, 2 for the second, and so on.</p>
 <p>To instead discover how many pages exist in a tab control, follow this example:</p>
 <pre><a href="PostMessage.htm">SendMessage</a>, 0x1304,,, SysTabControl321, <i>WinTitle</i>  <em>; 0x1304 is TCM_GETITEMCOUNT.</em>
@@ -119,14 +118,14 @@ PageCount := ErrorLevel</pre>
 
 <h3 id="FindString">FindString</h3>
 <p>Retrieves the index of an entry in a list box, combo box, or drop-down list by string.</p>
-<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, FindString, String <span class="optional">, Control, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
+<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, FindString, String <span class="optional">, ControlID, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
 <p><em>String</em> should be the complete text of an entry.</p>
 <p><em>OutputVar</em> is set to 1 for the first entry, 2 for the second, and so on.</p>
 <p>If no match is found, <em>OutputVar</em> is made blank and <a href="../misc/ErrorLevel.htm">ErrorLevel</a> is set to 1.</p>
 
 <h3 id="Choice">Choice</h3>
 <p>Retrieves the text of the currently selected entry in a list box, combo box, or drop-down list.</p>
-<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, Choice <span class="optional">,, Control, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
+<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, Choice <span class="optional">,, ControlID, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
 <p>If no entry is selected, <em>OutputVar</em> is made blank and <a href="../misc/ErrorLevel.htm">ErrorLevel</a> is set to 1.</p>
 <p>In a <em>multi-select</em> list box, <em>OutputVar</em> is always set to the text of the entry with keyboard focus. This is usually the most recently selected entry when multiple entries have been selected.</p>
 <p>To instead retrieve the index of the selected entry, follow this example (use only one of the first two lines, i.e. LB_GETCURSEL for a list box or CB_GETCURSEL for a combo box or drop-down list):</p>
@@ -138,49 +137,48 @@ ChoiceIndex := (ErrorLevel&lt;&lt;32&gt;&gt;32) + 1</pre>
 
 <h3 id="LineCount">LineCount</h3>
 <p>Retrieves the number of lines in an edit control.</p>
-<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, LineCount <span class="optional">,, Control, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
+<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, LineCount <span class="optional">,, ControlID, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
 <p><em>OutputVar</em> is set to 1 for a total of one line, 2 for two lines, and so on.</p>
 <p>All edit controls have at least one line, even if the control is empty.</p>
 
 <h3 id="CurrentLine">CurrentLine</h3>
 <p>Retrieves the line number in an edit control where the caret resides.</p>
-<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, CurrentLine <span class="optional">,, Control, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
+<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, CurrentLine <span class="optional">,, ControlID, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
 <p><em>OutputVar</em> is set to 1 for the first line, 2 for the second, and so on.</p>
 <p>If there is text selected in the control, <em>OutputVar</em> is set to the line number where the selection begins.</p>
 
 <h3 id="CurrentCol">CurrentCol</h3>
 <p>Retrieves the column number in an edit control where the caret resides.</p>
-<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, CurrentCol <span class="optional">,, Control, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
+<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, CurrentCol <span class="optional">,, ControlID, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
 <p><em>OutputVar</em> is set to 1 for the first column, 2 for the second, and so on.</p>
 <p>If there is text selected in the control, <em>OutputVar</em> is set to the column number where the selection begins.</p>
 
 <h3 id="Line">Line</h3>
 <p>Retrieves the text of a line in an edit control by line number.</p>
-<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, Line, N <span class="optional">, Control, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
+<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, Line, N <span class="optional">, ControlID, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
 <p><em>N</em> should be a line number. The first line is 1, the second 2, and so on.</p>
 <p>If <em>N</em> does not exist, <em>OutputVar</em> is made blank and <a href="../misc/ErrorLevel.htm">ErrorLevel</a> is set to 1.</p>
 <p>Depending on the nature of the control, <em>OutputVar</em> might end in a carriage return (`r) or a carriage return + linefeed (`r`n).</p>
 
 <h3 id="Selected">Selected</h3>
 <p>Retrieves the selected text in an edit control.</p>
-<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, Selected <span class="optional">,, Control, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
+<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, Selected <span class="optional">,, ControlID, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
 <p>If no text is selected, <em>OutputVar</em> is made blank and <a href="../misc/ErrorLevel.htm">ErrorLevel</a> is set to 0 (i.e. no error).</p>
 <p>Certain types of controls, such as RichEdit20A, might not produce the correct text in some cases (e.g. Metapad).</p>
 
 <h3 id="Style">Style</h3>
 <p>Retrieves an 8-digit hexadecimal number representing the style of a control.</p>
-<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, Style <span class="optional">,, Control, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
+<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, Style <span class="optional">,, ControlID, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
 <p>See the <a href="../misc/Styles.htm">styles table</a> for a listing of some styles.</p>
 
 <h3 id="ExStyle">ExStyle</h3>
 <p>Retrieves an 8-digit hexadecimal number representing the extended style of a control.</p>
-<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, ExStyle <span class="optional">,, Control, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
+<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, ExStyle <span class="optional">,, ControlID, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
 <p>See the <a href="../misc/Styles.htm">styles table</a> for a listing of some styles.</p>
 
 <h3 id="Hwnd">Hwnd <span class="ver">[v1.0.43.06+]</span></h3>
-<p>Retrieves the window handle (HWND) of a control.</p>
-<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, Hwnd <span class="optional">,, Control, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
-<p>A control's HWND is often used with <a href="PostMessage.htm">PostMessage</a>, <a href="PostMessage.htm">SendMessage</a>, and <a href="DllCall.htm">DllCall()</a>. On a related note, a control's HWND can also be retrieved via <a href="MouseGetPos.htm">MouseGetPos</a>. Finally, a control's HWND can be used directly as an <a href="../misc/WinTitle.htm#ahk_id">ahk_id WinTitle</a> (this also works on hidden controls even when <a href="DetectHiddenWindows.htm">DetectHiddenWindows</a> is Off).</p>
+<p>Retrieves the <a href="../misc/ControlID.htm#HWND">window handle (HWND)</a> of a control.</p>
+<pre class="Syntax"><span class="func">ControlGet</span>, OutputVar, Hwnd <span class="optional">,, ControlID, WinTitle, WinText, ExcludeTitle, ExcludeText</span></pre>
 
 <h2 id="Error_Handling">Error Handling</h2>
 <p><span class="ver">[v1.1.04+]</span>: This command is able to throw an exception on failure. For more information, see <a href="Catch.htm#RuntimeErrors">Runtime Errors</a>.</p>
@@ -189,7 +187,7 @@ ChoiceIndex := (ErrorLevel&lt;&lt;32&gt;&gt;32) + 1</pre>
 <h2 id="Remarks">Remarks</h2>
 <p>This command is intended for use with controls in a non-GUI window, i.e. a window that is not created with the <a href="Gui.htm">Gui</a> command. It works best with common or predefined Microsoft controls; some applications use custom or modified controls, in which case the command might not work as expected. For <a href="GuiControls.htm">GUI controls</a>, it is usually more convenient to use <a href="GuiControlGet.htm">GuiControlGet</a>, assuming a suitable counterpart exists.</p>
 <p>Unlike commands that change a control, ControlGet does not have an automatic delay; that is, <a href="SetControlDelay.htm">SetControlDelay</a> does not affect it.</p>
-<p>To discover the ClassNN or HWND of the control that the mouse is currently hovering over, use <a href="MouseGetPos.htm">MouseGetPos</a>. To retrieve a list of all controls in a window, use <a href="WinGet.htm#ControlList">WinGet ControlList</a>.</p>
+<p>To discover the <a href="../misc/ControlID.htm#ClassNN">ClassNN</a> or <a href="../misc/ControlID.htm#HWND">HWND</a> of the control that the mouse is currently hovering over, use <a href="MouseGetPos.htm">MouseGetPos</a>. To retrieve a list of all controls in a window, use <a href="WinGet.htm#ControlList">WinGet ControlList</a>.</p>
 
 <h2 id="Related">Related</h2>
 <p><a href="Control.htm">Control</a>, <a href="GuiControlGet.htm">GuiControlGet</a>, <a href="ControlMove.htm">ControlMove</a>, <a href="ControlGetText.htm">ControlGetText</a>, <a href="ControlSetText.htm">ControlSetText</a>, <a href="ControlGetPos.htm">ControlGetPos</a>, <a href="ControlClick.htm">ControlClick</a>, <a href="ControlFocus.htm">ControlFocus</a>, <a href="ControlSend.htm">ControlSend</a>, <a href="WinGet.htm">WinGet</a></p>
@@ -211,7 +209,7 @@ else
 </div>
 
 <div class="ex" id="ExHwnd">
-<p><a class="ex_number" href="#ExHwnd"></a> Retrieves the window handle (HWND) of the first edit control in a GUI or non-GUI window.</p>
+<p><a class="ex_number" href="#ExHwnd"></a> Retrieves the <a href="../misc/ControlID.htm#HWND">window handle (HWND)</a> of the first edit control in a GUI or non-GUI window.</p>
 <pre>ControlGet, OutputVar, Hwnd,, Edit1, Some Window Title</pre>
 </div>
 

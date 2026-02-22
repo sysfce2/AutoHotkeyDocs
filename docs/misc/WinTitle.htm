@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-<title>WinTitle &amp; Last Found Window | AutoHotkey v1</title>
+<title>WinTitle Parameter &amp; Last Found Window | AutoHotkey v1</title>
 <meta name="description" content="This page lists criteria that can be used in the WinTitle parameter of commands, functions, etc. to determine the target window(s)." />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<h1><var>WinTitle</var> Parameter &amp; Last Found Window</h1>
+<h1>WinTitle Parameter &amp; Last Found Window</h1>
 <p>Various commands, functions, directives, and control flow statements have a <var>WinTitle</var> parameter, used to identify which window (or windows) to operate on. This parameter can be the title or partial title of the window, and/or any other criteria described on this page.</p>
 
 <h2 id="toc">Table of Contents</h2>
@@ -29,6 +29,7 @@
   </li>
   <li><a href="#multi">Multiple Criteria</a></li>
   <li><a href="#LastFoundWindow">Last Found Window</a></li>
+  <li><a href="#Related">Related</a></li>
 </ul>
 
 <a id="Matching"></a>
@@ -63,7 +64,9 @@
 
 <h3 id="ahk_id">ahk_id (Unique ID / HWND)</h3>
 <p>Use <code class="no-highlight">ahk_id <var>HWND</var></code> in <var>WinTitle</var> to identify a window or control by its unique ID.</p>
-<p>Each window or control has a unique ID, also known as a HWND (short for handle to window). This ID can be used to identify the window or control even if its title or text changes. The ID of a window is typically retrieved via <a href="../lib/WinExist.htm">WinExist()</a> or <a href="../lib/WinGet.htm">WinGet</a>. The ID of a control is typically retrieved via <a href="../lib/ControlGet.htm#Hwnd">ControlGet Hwnd</a>, <a href="../lib/MouseGetPos.htm">MouseGetPos</a>, or <a href="../lib/DllCall.htm">DllCall()</a>. Also, the ahk_id criterion will operate on controls even if they are hidden; that is, the setting of <a href="../lib/DetectHiddenWindows.htm">DetectHiddenWindows</a> does not matter for controls.</p>
+<p>Each window and control has a unique ID, also known as a HWND (short for handle to window). This ID can be used to identify the window or control even if its title or text changes. The ID of a window is typically retrieved via <a href="../lib/WinExist.htm">WinExist()</a> or <a href="../lib/WinGet.htm">WinGet</a>. For details about identifying a control by HWND, see <a href="ControlID.htm#HWND">Control Identifiers</a>.</p>
+<p>A HWND is especially useful when sending messages directly to a window or control via <a href="../lib/PostMessage.htm">PostMessage</a>, <a href="../lib/PostMessage.htm">SendMessage</a>, or when calling native APIs with <a href="../lib/DllCall.htm">DllCall()</a>.</p>
+
 <p>The following example activates a window by a unique ID stored in <var>VarContainingID</var>:</p>
 <pre>WinActivate, ahk_id %VarContainingID%</pre>
 
@@ -133,6 +136,9 @@ else
     WinActivate <em>; Use the window found by WinExist.</em>
     WinMove, 40, 40 <em>; Same as above.</em>
 }</pre>
+
+<h2 id="Related">Related</h2>
+<p><a href="ControlID.htm">ControlID Parameter (Window Control Identifiers)</a></p>
 
 </body>
 </html>

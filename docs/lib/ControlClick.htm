@@ -15,17 +15,17 @@
 
 <p>Sends a mouse button or mouse wheel event to a window or control.</p>
 
-<pre class="Syntax"><span class="func">ControlClick</span> <span class="optional">, Control-or-Pos, WinTitle, WinText, WhichButton, ClickCount, Options, ExcludeTitle, ExcludeText</span></pre>
+<pre class="Syntax"><span class="func">ControlClick</span> <span class="optional">, ControlID-or-Pos, WinTitle, WinText, WhichButton, ClickCount, Options, ExcludeTitle, ExcludeText</span></pre>
 <h2 id="Parameters">Parameters</h2>
 <dl>
 
-  <dt>Control-or-Pos</dt>
-  <dd><p>If blank or omitted, the target window's topmost control will be clicked (or the target window itself if it has no controls). Otherwise, use one of the following modes.</p>
+  <dt>ControlID-or-Pos</dt>
+  <dd><p>If blank or omitted, the target window's topmost control will be clicked (or the window itself if there are no controls). Otherwise, use one of the following modes.</p>
       <p><strong>Mode 1 (Position):</strong> Specify the X and Y coordinates relative to the target window's upper left corner. The X coordinate must precede the Y coordinate and there must be at least one space or tab between them. For example: <code class="no-highlight">X55 Y33</code>. If there is a control at the specified coordinates, it will be sent the click-event at those exact coordinates. If there is no control, the target window itself will be sent the event (which might have no effect depending on the nature of the window).</p>
     <p class="note"><strong>Note:</strong> In mode 1, the X and Y option letters of the <em>Options</em> parameter are ignored.</p>
-      <p><strong>Mode 2 (ClassNN or Text):</strong> Specify either ClassNN (the classname and instance number of the control) or the name/text of the control, both of which can be determined via Window Spy. When using name/text, the matching behavior is determined by <a href="SetTitleMatchMode.htm">SetTitleMatchMode</a>.</p>
+      <p><strong>Mode 2 (Control Identifier):</strong> Specify the control's ClassNN or text, or leave it blank and specify <code class="no-highlight">ahk_id %ControlHwnd%</code> for the <em>WinTitle</em> parameter to operate upon the control's HWND. For details, see <a href="../misc/ControlID.htm">Control Identifiers</a>.</p>
       <p>By default, mode 2 takes precedence over mode 1. For example, in the unlikely event that there is a control whose text or ClassNN has the format "Xnnn Ynnn", it would be acted upon by mode 2. To override this and use mode 1 unconditionally, specify the word Pos in <em>Options</em> as in the following example: <code>ControlClick, x255 y152, WinTitle,,,, Pos</code>.</p>
-      <p>To operate upon a control's HWND (window handle), leave this parameter blank and specify <code class="no-highlight">ahk_id %ControlHwnd%</code> for the <em>WinTitle</em> parameter (this also works on hidden controls even when <a href="DetectHiddenWindows.htm">DetectHiddenWindows</a> is Off). The HWND of a control is typically retrieved via <a href="ControlGet.htm#Hwnd">ControlGet Hwnd</a>, <a href="MouseGetPos.htm">MouseGetPos</a>, or <a href="DllCall.htm">DllCall()</a>.</p></dd>
+  </dd>
 
   <dt>WinTitle, WinText, ExcludeTitle, ExcludeText</dt>
   <dd>
@@ -49,7 +49,7 @@
       <p><strong>NA</strong> <span class="ver">[v1.0.45+]</span>: May improve reliability. See <a href="#Reliability">reliability</a> below.</p>
       <p><strong>D:</strong> Press the mouse button down but do not release it (i.e. generate a down-event). If both the D and U options are absent, a complete click (down and up) will be sent.</p>
       <p><strong>U:</strong> Release the mouse button (i.e. generate an up-event). This option should not be present if the D option is already present (and vice versa).</p>
-      <p><strong>Pos:</strong> Specify the word Pos anywhere in <em>Options</em> to unconditionally use the X/Y positioning mode as described in the <em>Control-or-Pos</em> parameter above.</p>
+      <p><strong>Pos:</strong> Specify the word Pos anywhere in <em>Options</em> to unconditionally use the X/Y positioning mode as described in the <em>ControlID-or-Pos</em> parameter above.</p>
       <p><strong>X</strong><em>n</em>: Specify for <em>n</em> the X position to click at, relative to the control's upper left corner. If unspecified, the click will occur at the horizontal-center of the control.</p>
       <p><strong>Y</strong><em>n</em>: Specify for <em>n</em> the Y position to click at, relative to the control's upper left corner. If unspecified, the click will occur at the vertical-center of the control.</p>
       <p>Use decimal (not hexadecimal) numbers for the X and Y options. The numbers are in pixels.</p></dd>
@@ -70,7 +70,7 @@ ControlClick, Toolbar321, WinTitle,,,, NA</pre>
 <p>This command is intended for use with controls in a non-GUI window, i.e. a window that is not created with the <a href="Gui.htm">Gui</a> command. It works best with common or predefined Microsoft controls; some applications use custom or modified controls, in which case the command might not work as expected. For <a href="GuiControls.htm">GUI controls</a>, it is usually more convenient to use <a href="GuiControl.htm">GuiControl</a> (assuming a suitable counterpart exists) or execute their <a href="Gui.htm#label">g-label</a> directly.</p>
 <p>Not all applications obey a <em>ClickCount</em> higher than 1 for turning the mouse wheel. For those applications, use a loop to turn the wheel more than one notch as in this example, which turns it 5 notches:</p>
 <pre>Loop, 5
-    ControlClick, <i>Control</i>, <i>WinTitle</i>, <i>WinText</i>, WheelUp</pre>
+    ControlClick, <i>ControlID</i>, <i>WinTitle</i>, <i>WinText</i>, WheelUp</pre>
 
 <h2 id="Related">Related</h2>
 <p><a href="SetControlDelay.htm">SetControlDelay</a>, <a href="Control.htm">Control</a>, <a href="ControlGet.htm">ControlGet</a>, <a href="ControlGetText.htm">ControlGetText</a>, <a href="ControlMove.htm">ControlMove</a>, <a href="ControlGetPos.htm">ControlGetPos</a>, <a href="ControlFocus.htm">ControlFocus</a>, <a href="ControlSetText.htm">ControlSetText</a>, <a href="ControlSend.htm">ControlSend</a>, <a href="Click.htm">Click</a></p>
